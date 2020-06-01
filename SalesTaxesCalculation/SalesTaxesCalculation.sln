@@ -5,9 +5,13 @@ VisualStudioVersion = 15.0.28307.1062
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesTaxesCalculation", "SalesTaxesCalculation\SalesTaxesCalculation.csproj", "{B6BD94AF-624E-4E8E-A7D8-973BB3712D0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesTaxesCalculation.UnitTests", "SalesTaxesCalculation.UnitTests\SalesTaxesCalculation.UnitTests.csproj", "{B1E690DF-1142-4757-BE2A-A3D35CA8775F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesTaxesCalculation.UnitTests", "SalesTaxesCalculation.UnitTests\SalesTaxesCalculation.UnitTests.csproj", "{B1E690DF-1142-4757-BE2A-A3D35CA8775F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A5D9C421-8EE4-497C-9843-03C4DC9A2EF8} = {A5D9C421-8EE4-497C-9843-03C4DC9A2EF8}
+		{B6BD94AF-624E-4E8E-A7D8-973BB3712D0A} = {B6BD94AF-624E-4E8E-A7D8-973BB3712D0A}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesTaxesCalculation.Core", "SalesTaxesCalculation.Core\SalesTaxesCalculation.Core.csproj", "{A5D9C421-8EE4-497C-9843-03C4DC9A2EF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesTaxesCalculation.Core", "SalesTaxesCalculation.Core\SalesTaxesCalculation.Core.csproj", "{A5D9C421-8EE4-497C-9843-03C4DC9A2EF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
