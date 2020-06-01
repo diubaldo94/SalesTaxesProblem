@@ -11,6 +11,7 @@ namespace SalesTaxesCalculation.Core
 
     public interface IReceiptRow
     {
+        PurchaseRow PurchaseInfo { get; }
         double TaxesAmount();
         double TotalAmount();
     }

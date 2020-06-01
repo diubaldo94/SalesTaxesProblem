@@ -5,6 +5,7 @@ namespace SalesTaxesCalculation.Core
     public interface IRepository<T>
     {
         Task<PurchaseContainer> GetPurchases();
-        void Restore(PurchaseContainer purchaseContainer);
+        Task Restore(PurchaseContainer purchaseContainer);
+        Task Backup(PurchaseContainer purchases);
     }
 }
