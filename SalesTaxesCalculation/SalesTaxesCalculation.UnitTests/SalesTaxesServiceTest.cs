@@ -31,7 +31,7 @@ namespace SalesTaxesCalculation.UnitTests
 
             //todo make an uow inside to process file batch in transaction
             //todo how to handle file management and transaction?
-            _sut = new SalesTaxesService(_purchaseRepositoryMock.Object, _taxesCalculatorMock.Object, _receiptNotifier.Object);
+            _sut = new SalesTaxesService(_purchaseRepositoryMock.Object, _taxesCalculatorMock.Object, _receiptNotifier.Object, _logHandler.Object);
         }
 
         [Fact]
@@ -39,7 +39,7 @@ namespace SalesTaxesCalculation.UnitTests
         {
             var samplePurchases = GetPurchaseContainer();
             var sampleReceipts = GetReceiptContainer();
-            _purchaseRepositoryMock.Setup(i => i.GetPurchases()).ReturnsAsync(samplePurchases).Verifiable();
+            _purchaseRepositoryMock.Setup(i => i.GetData()).ReturnsAsync(samplePurchases).Verifiable();
             _taxesCalculatorMock.Setup(i => i.Compute(It.Is<Purchase>(p => p.Equals(samplePurchases.List[0]))))
                 .Returns(sampleReceipts.List[0]).Verifiable();
             _taxesCalculatorMock.Setup(i => i.Compute(It.Is<Purchase>(p => p.Equals(samplePurchases.List[1]))))
@@ -55,7 +55,7 @@ namespace SalesTaxesCalculation.UnitTests
         public async Task Should_LogNoDataFound_OnRepositoyWithoutData()
         {
             var containerWithNoPurchases = new PurchaseContainer(new List<Purchase>());
-            _purchaseRepositoryMock.Setup(i => i.GetPurchases()).ReturnsAsync(containerWithNoPurchases).Verifiable();            
+            _purchaseRepositoryMock.Setup(i => i.GetData()).ReturnsAsync(containerWithNoPurchases).Verifiable();            
 
             await _sut.ProcessPurchases();
 
@@ -69,7 +69,7 @@ namespace SalesTaxesCalculation.UnitTests
         {
             var expectedErrMessage = "error on getting data";
             var containerWithNoPurchases = new PurchaseContainer(new List<Purchase>());
-            _purchaseRepositoryMock.Setup(i => i.GetPurchases()).ThrowsAsync(new Exception(expectedErrMessage)).Verifiable();
+            _purchaseRepositoryMock.Setup(i => i.GetData()).ThrowsAsync(new Exception(expectedErrMessage)).Verifiable();
 
             Assert.ThrowsAsync<Exception>(async () => await _sut.ProcessPurchases());
 
@@ -85,7 +85,7 @@ namespace SalesTaxesCalculation.UnitTests
             var expectedErrMsg = "error on process data";
             var samplePurchases = GetPurchaseContainer();
             var sampleReceipts = GetReceiptContainer();
-            _purchaseRepositoryMock.Setup(i => i.GetPurchases()).ReturnsAsync(samplePurchases).Verifiable();
+            _purchaseRepositoryMock.Setup(i => i.GetData()).ReturnsAsync(samplePurchases).Verifiable();
             _taxesCalculatorMock.Setup(i => i.Compute(It.Is<Purchase>(p => p.Equals(samplePurchases.List[0]))))
                 .Returns(sampleReceipts.List[0]);
             _taxesCalculatorMock.Setup(i => i.Compute(It.Is<Purchase>(p => p.Equals(samplePurchases.List[1]))))
@@ -105,7 +105,7 @@ namespace SalesTaxesCalculation.UnitTests
             var expectedErrMsg = "error on notify data";
             var samplePurchases = GetPurchaseContainer();
             var sampleReceipts = GetReceiptContainer();
-            _purchaseRepositoryMock.Setup(i => i.GetPurchases()).ReturnsAsync(samplePurchases).Verifiable();
+            _purchaseRepositoryMock.Setup(i => i.GetData()).ReturnsAsync(samplePurchases).Verifiable();
             _taxesCalculatorMock.Setup(i => i.Compute(It.Is<Purchase>(p => p.Equals(samplePurchases.List[0]))))
                 .Returns(sampleReceipts.List[0]).Verifiable();
             _taxesCalculatorMock.Setup(i => i.Compute(It.Is<Purchase>(p => p.Equals(samplePurchases.List[1]))))

@@ -22,7 +22,7 @@ namespace SalesTaxesCalculation.Core
 
         public async Task ProcessPurchases()
         {
-            var purchases = await _repo.GetPurchases();
+            var purchases = await _repo.GetData();
 
             try
             {
