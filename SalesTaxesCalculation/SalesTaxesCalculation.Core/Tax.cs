@@ -17,8 +17,8 @@ namespace SalesTaxesCalculation.Core
 
         public class Params
         {
-            public int PriceBeforeTaxes { get; }
-            public Params(int priceBeforeTaxes)
+            public double PriceBeforeTaxes { get; }
+            public Params(double priceBeforeTaxes)
             {
                 PriceBeforeTaxes = priceBeforeTaxes;
             }

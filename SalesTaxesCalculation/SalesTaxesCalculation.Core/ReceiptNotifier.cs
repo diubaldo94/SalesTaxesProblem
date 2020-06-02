@@ -16,11 +16,13 @@ namespace SalesTaxesCalculation.UnitTests
 
         public async Task Notify(ReceiptContainer receipts)
         {
-            _logHandler.LogInfo(GenerateMessage(receipts));
+            string logMessage = GenerateMessage(receipts);
+            _logHandler.LogInfo(logMessage);
         }
 
         private string GenerateMessage(ReceiptContainer receipts)
         {
+            //todo fix decimals show (always two)
             var stringBuilder = new StringBuilder();
             stringBuilder.AppendLine("INPUT");
             stringBuilder.AppendLine();
@@ -30,10 +32,11 @@ namespace SalesTaxesCalculation.UnitTests
                 stringBuilder.AppendLine($"Input {i + 1}:");
                 foreach(var row in receipts.List[i].ReceiptRows)
                 {
-                    stringBuilder.AppendLine($"{row.PurchaseInfo.Quantity} ");
+                    stringBuilder.Append($"{row.PurchaseInfo.Quantity} ");
                     if (row.PurchaseInfo.Imported)
                         stringBuilder.Append($"imported ");
                     stringBuilder.Append($"{row.PurchaseInfo.Item.Name} at {row.PurchaseInfo.Item.PriceBeforeTaxes}");
+                    stringBuilder.AppendLine();
                 }
                 stringBuilder.AppendLine();
             }
@@ -44,10 +47,11 @@ namespace SalesTaxesCalculation.UnitTests
                 stringBuilder.AppendLine($"Output {i + 1}:");
                 foreach (var row in receipts.List[i].ReceiptRows)
                 {
-                    stringBuilder.AppendLine($"{row.PurchaseInfo.Quantity} ");
+                    stringBuilder.Append($"{row.PurchaseInfo.Quantity} ");
                     if (row.PurchaseInfo.Imported)
                         stringBuilder.Append($"imported ");
                     stringBuilder.Append($"{row.PurchaseInfo.Item.Name}: {row.TotalAmount()}");
+                    stringBuilder.AppendLine();
                 }
                 stringBuilder.AppendLine($"Sales Taxes: {receipts.List[i].TaxesAmount()}");
                 stringBuilder.AppendLine($"Total: {receipts.List[i].TotalAmount()}");

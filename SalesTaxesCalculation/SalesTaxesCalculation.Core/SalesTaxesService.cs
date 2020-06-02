@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,10 +25,14 @@ namespace SalesTaxesCalculation.Core
 
         public async Task ProcessPurchases()
         {
-            var purchases = await _repo.GetData();
-
             try
             {
+                var purchases = await _repo.GetData();
+
+                //todo to thron or not?
+                if (!purchases.List.Any())
+                    return;// throw new Exception("No rows on the purchase file");
+
                 var generatedReceipts = new List<IReceipt>();
                 foreach(var purchase in purchases.List)
                 {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace SalesTaxesCalculation.Core
 {
@@ -11,15 +12,9 @@ namespace SalesTaxesCalculation.Core
         }
 
         public IList<IReceiptRow> ReceiptRows { get; }
-        public double TaxesAmount()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public double TotalAmount()
-        {
-            throw new System.NotImplementedException();
-        }
+        public double TaxesAmount() => ReceiptRows.Sum(i => i.TaxesAmount());
+        
+        public double TotalAmount() => ReceiptRows.Sum(i => i.TotalAmount());
     }
 
     public class ReceiptRow : IReceiptRow
@@ -33,14 +28,11 @@ namespace SalesTaxesCalculation.Core
             _appliedTaxes = appliedTaxes;
         }
 
-        public double TaxesAmount()
-        {
-            throw new System.NotImplementedException();
-        }
+        public double TaxesAmount() => PurchaseInfo.Quantity *
+            (PurchaseInfo.Item.PriceBeforeTaxes + 
+            _appliedTaxes.Sum(i => i.CalculateAmount(new Tax.Params(PurchaseInfo.Item.PriceBeforeTaxes))));
 
-        public double TotalAmount()
-        {
-            throw new System.NotImplementedException();
-        }
+        public double TotalAmount() => PurchaseInfo.Quantity * 
+            _appliedTaxes.Sum(i => i.CalculateAmount(new Tax.Params(PurchaseInfo.Item.PriceBeforeTaxes)));
     }
 }
