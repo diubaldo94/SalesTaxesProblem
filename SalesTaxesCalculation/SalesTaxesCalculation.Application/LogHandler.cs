@@ -1,7 +1,7 @@
 ﻿using SalesTaxesCalculation.Core;
 using System;
 
-namespace SalesTaxesCalculation
+namespace SalesTaxesCalculation.Application
 {
     public class LogHandler : ILogHandler
     {
@@ -16,5 +16,5 @@ namespace SalesTaxesCalculation
         }
     }
 
-    
+
 }

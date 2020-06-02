@@ -2,9 +2,10 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using SalesTaxesCalculation.Application.Exception;
 using SalesTaxesCalculation.Core;
 
-namespace SalesTaxesCalculation
+namespace SalesTaxesCalculation.Application
 {
 
     public class FileRepository<T> : IRepository<T>
@@ -70,7 +71,7 @@ namespace SalesTaxesCalculation
                 }
                 return _serializer.Map(text);
             }
-            catch(MapperException)
+            catch (MapperException)
             {
                 file.MoveTo($"{_errPath}{DateTime.Now:yyyyMMddHHmmss}_ErrorPurchase.json");
                 throw;

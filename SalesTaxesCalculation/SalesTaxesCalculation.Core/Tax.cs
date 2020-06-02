@@ -13,6 +13,7 @@ namespace SalesTaxesCalculation.Core
             _percentage = percentage;
         }
 
+        //todo why 3 imported box of chocolates: 35.40 instead of 35.55
         public virtual double CalculateAmount(Params param) => param.PriceBeforeTaxes * _percentage;
 
         public class Params

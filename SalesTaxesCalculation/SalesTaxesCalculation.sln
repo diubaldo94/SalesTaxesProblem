@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.1062
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30128.74
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesTaxesCalculation", "SalesTaxesCalculation\SalesTaxesCalculation.csproj", "{B6BD94AF-624E-4E8E-A7D8-973BB3712D0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesTaxesCalculation.Application", "SalesTaxesCalculation.Application\SalesTaxesCalculation.Application.csproj", "{B6BD94AF-624E-4E8E-A7D8-973BB3712D0A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesTaxesCalculation.UnitTests", "SalesTaxesCalculation.UnitTests\SalesTaxesCalculation.UnitTests.csproj", "{B1E690DF-1142-4757-BE2A-A3D35CA8775F}"
 	ProjectSection(ProjectDependencies) = postProject

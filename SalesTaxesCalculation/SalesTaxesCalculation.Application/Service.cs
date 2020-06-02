@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using SalesTaxesCalculation.Core;
 
-namespace SalesTaxesCalculation
+namespace SalesTaxesCalculation.Application
 {
     public class Service : IHostedService
     {

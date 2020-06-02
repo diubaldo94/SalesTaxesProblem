@@ -2,10 +2,11 @@
 using System.Linq;
 using System.Linq.Expressions;
 using Newtonsoft.Json;
+using SalesTaxesCalculation.Application.Dto;
+using SalesTaxesCalculation.Application.Exception;
 using SalesTaxesCalculation.Core;
-using SalesTaxesCalculation.Dto;
 
-namespace SalesTaxesCalculation
+namespace SalesTaxesCalculation.Application
 {
     public interface IMapper<T>
     {
@@ -21,7 +22,7 @@ namespace SalesTaxesCalculation
             {
                 dto = JsonConvert.DeserializeObject<PurchaseContainerDto>(input);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw new MapperException(e);
             }
