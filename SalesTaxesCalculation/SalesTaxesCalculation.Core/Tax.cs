@@ -34,6 +34,11 @@ namespace SalesTaxesCalculation.Core
     {
         public RoundedTax(string importTaxLabel, double percentage) : base(importTaxLabel, percentage) { }
 
-        public override double CalculateAmount(Params param) => Math.Round(param.PriceBeforeTaxes * _percentage * 10, 1) / 2;
+        public override double CalculateAmount(Params param)
+        {
+            double v = param.PriceBeforeTaxes * _percentage;
+            double v1 = Math.Round(v * 20);
+            return v1 / 20;
+        }
     }
 }

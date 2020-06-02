@@ -68,8 +68,15 @@ namespace SalesTaxesCalculation.UnitTests
             IReceipt expected = new FakeReceipt(expectedReceiptRows);
             var actual = _sut.Compute(purchase);
 
+            double expectedTaxes = expected.TaxesAmount();
+            double actualTaxes = actual.TaxesAmount();
+            double expectedTotal = expected.TotalAmount();
+            double actualTotal = actual.TotalAmount();
+
             Assert.Equal(purchase.Rows.Count, actual.ReceiptRows.Count);
-            Assert.Equal(expected, actual);
+
+            Assert.Equal(expectedTaxes, actualTaxes);
+            Assert.Equal(expectedTotal, actualTotal);
         }
 
     }

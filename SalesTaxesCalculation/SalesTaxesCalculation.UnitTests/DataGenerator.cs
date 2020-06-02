@@ -17,7 +17,7 @@ namespace SalesTaxesCalculation.UnitTests
         private static readonly double _expectedImportTax1 = 1.50;
                        
         private static readonly double _price2 = 8.96;
-        private static readonly double _expectedBasicTax2 = 1.79;
+        private static readonly double _expectedBasicTax2 = 1.80;
         private static readonly double _expectedImportTax2 = 1.35;
                        
         public static string ExemptType = "book";

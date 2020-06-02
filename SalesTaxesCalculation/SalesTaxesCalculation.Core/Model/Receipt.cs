@@ -28,11 +28,16 @@ namespace SalesTaxesCalculation.Core
             _appliedTaxes = appliedTaxes;
         }
 
-        public double TaxesAmount() => PurchaseInfo.Quantity *
-            (PurchaseInfo.Item.PriceBeforeTaxes + 
-            _appliedTaxes.Sum(i => i.CalculateAmount(new Tax.Params(PurchaseInfo.Item.PriceBeforeTaxes))));
+        public double TaxesAmount()
+        {
+            double v = TaxesForPiece();
+            return PurchaseInfo.Quantity * v;
+        }
 
-        public double TotalAmount() => PurchaseInfo.Quantity * 
-            _appliedTaxes.Sum(i => i.CalculateAmount(new Tax.Params(PurchaseInfo.Item.PriceBeforeTaxes)));
+        public double TotalAmount() => PurchaseInfo.Quantity *
+            (PurchaseInfo.Item.PriceBeforeTaxes + TaxesForPiece());
+
+        private double TaxesForPiece() => _appliedTaxes.Sum(i => i.CalculateAmount(new Tax.Params(PurchaseInfo.Item.PriceBeforeTaxes)));
+
     }
 }
