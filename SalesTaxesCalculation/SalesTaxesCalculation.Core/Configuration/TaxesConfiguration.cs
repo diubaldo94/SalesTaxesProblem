@@ -2,18 +2,18 @@
 {
     public class TaxesConfiguration
     {
-        private double _basicTaxPercentage;
-        private double _importTaxPercentage;
-        private string _basicTaxLabel;
-        private string _importTaxLabel;
-        
+        public double BasicTaxPercentage { get; }
+        public double ImportTaxPercentage { get; }
+        public string BasicTaxLabel { get; }
+        public string ImportTaxLabel { get; }
+
 
         public TaxesConfiguration(double basicTaxPercentage, string basicTaxLabel, double importTaxPercentage, string importTaxLabel)
         {
-            _basicTaxPercentage = basicTaxPercentage;
-            _basicTaxLabel = basicTaxLabel;
-            _importTaxPercentage = importTaxPercentage;
-            _importTaxLabel = importTaxLabel;
+            BasicTaxPercentage = basicTaxPercentage;
+            BasicTaxLabel = basicTaxLabel;
+            ImportTaxPercentage = importTaxPercentage;
+            ImportTaxLabel = importTaxLabel;
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SalesTaxesCalculation.Core
@@ -33,13 +35,16 @@ namespace SalesTaxesCalculation.Core
                     generatedReceipts.Add(receipt);
                 }
                 await _notifier.Notify(new ReceiptContainer(generatedReceipts));
-                _ = _repo.Backup(purchases);
             }
             catch(Exception e)
             {
                 _logHandler.LogError(e.Message);
-                _ = _repo.Restore(purchases);
             }
+        }
+
+        public void Dispose()
+        {
+            
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using SalesTaxesCalculation.UnitTests;
+﻿using SalesTaxesCalculation.UnitTests;
+using System.Collections.Generic;
 
 namespace SalesTaxesCalculation.Core
 {

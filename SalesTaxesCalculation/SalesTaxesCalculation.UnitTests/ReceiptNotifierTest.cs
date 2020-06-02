@@ -21,10 +21,10 @@ namespace SalesTaxesCalculation.UnitTests
         }
 
         [Fact]
-        public void Should_ShowOnConsoleResult()
+        public async Task Should_ShowOnConsoleResult()
         {
             var receipts = DataGenerator.GetReceipts();
-            _sut.Notify(new ReceiptContainer(receipts));
+            await _sut.Notify(new ReceiptContainer(receipts));
 
             var expectedLogMessage = DataGenerator.GetMessage();
             _logHandlerMock.Verify(i => i.LogInfo(expectedLogMessage), Times.Once);

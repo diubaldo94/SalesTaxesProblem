@@ -37,7 +37,8 @@ namespace SalesTaxesCalculation.UnitTests
                     DataGenerator.BasicTaxPercentage,
                     DataGenerator.BasicTaxLabel,
                     DataGenerator.ImportTaxPercentage,
-                    DataGenerator.ImportTaxLabel));        
+                    DataGenerator.ImportTaxLabel), 
+                new BasicTaxExemptTypes(new List<string> { DataGenerator.ExemptType }));        
 
             /*
              * 

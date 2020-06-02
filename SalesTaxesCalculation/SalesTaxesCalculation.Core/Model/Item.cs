@@ -1,4 +1,4 @@
-﻿namespace SalesTaxesCalculation.UnitTests
+﻿namespace SalesTaxesCalculation.Core
 {
     public class Item
     {

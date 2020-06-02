@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Text;
+using System.Threading.Tasks;
 using SalesTaxesCalculation.Core;
 
 namespace SalesTaxesCalculation.UnitTests
 {
-    public class ReceiptNotifier
+    public class ReceiptNotifier : INotifier<ReceiptContainer>
     {
         private ILogHandler _logHandler;
 
@@ -13,7 +14,7 @@ namespace SalesTaxesCalculation.UnitTests
             _logHandler = logHandler;
         }
 
-        public void Notify(ReceiptContainer receipts)
+        public async Task Notify(ReceiptContainer receipts)
         {
             _logHandler.LogInfo(GenerateMessage(receipts));
         }

@@ -20,17 +20,17 @@ namespace SalesTaxesCalculation.UnitTests
         private static readonly double _expectedBasicTax2 = 1.79;
         private static readonly double _expectedImportTax2 = 1.35;
                        
-        private static readonly string _exemptType = "book";
-        private static readonly string _notExemptType = "tv";
+        public static string ExemptType = "book";
+        public static string NotExemptType = "tv";
                        
-        private static readonly PurchaseRow rowWithImportBasicTax1 = new PurchaseRow(new Item("i1", _notExemptType, _price1), 3, true);
-        private static readonly PurchaseRow rowWithImportTax1 = new PurchaseRow(new Item("i2", _exemptType, _price1), 5, true);
-        private static readonly PurchaseRow rowWithBasicTax1 = new PurchaseRow(new Item("i3", _notExemptType, _price1), 33, false);
-        private static readonly PurchaseRow rowWithNoTax1 = new PurchaseRow(new Item("i4", _exemptType, _price1), 7, false);
-        private static readonly PurchaseRow rowWithImportBasicTax2 = new PurchaseRow(new Item("i5", _notExemptType, _price2), 1, true);
-        private static readonly PurchaseRow rowWithImportTax2 = new PurchaseRow(new Item("i6", _exemptType, _price2), 22, true);
-        private static readonly PurchaseRow rowWithBasicTax2 = new PurchaseRow(new Item("i7", _notExemptType, _price2), 1, false);
-        private static readonly PurchaseRow rowWithNoTax2 = new PurchaseRow(new Item("i8", _exemptType, _price2), 2, false);
+        private static readonly PurchaseRow rowWithImportBasicTax1 = new PurchaseRow(new Item("i1", NotExemptType, _price1), 3, true);
+        private static readonly PurchaseRow rowWithImportTax1 = new PurchaseRow(new Item("i2", ExemptType, _price1), 5, true);
+        private static readonly PurchaseRow rowWithBasicTax1 = new PurchaseRow(new Item("i3", NotExemptType, _price1), 33, false);
+        private static readonly PurchaseRow rowWithNoTax1 = new PurchaseRow(new Item("i4", ExemptType, _price1), 7, false);
+        private static readonly PurchaseRow rowWithImportBasicTax2 = new PurchaseRow(new Item("i5", NotExemptType, _price2), 1, true);
+        private static readonly PurchaseRow rowWithImportTax2 = new PurchaseRow(new Item("i6", ExemptType, _price2), 22, true);
+        private static readonly PurchaseRow rowWithBasicTax2 = new PurchaseRow(new Item("i7", NotExemptType, _price2), 1, false);
+        private static readonly PurchaseRow rowWithNoTax2 = new PurchaseRow(new Item("i8", ExemptType, _price2), 2, false);
 
         //public static (PurchaseContainer, ReceiptContainer) GetSamplePurchaseContainerWithRelatedReceipt()
         //{
@@ -84,27 +84,27 @@ namespace SalesTaxesCalculation.UnitTests
             var expectedReceiptRows = new List<IReceiptRow>()
             {
                 new FakeReceiptRow(rowWithImportBasicTax1,
-                    new List<Tax>{GetBasicTaxWithAmount(_expectedBasicTax1), GetImportTaxWithAmount(_expectedImportTax1)}
+                    new List<FakeTax>{GetBasicTaxWithAmount(_expectedBasicTax1), GetImportTaxWithAmount(_expectedImportTax1)}
 
                 ),
                 new FakeReceiptRow(rowWithImportTax1,
-                    new List<Tax>{GetImportTaxWithAmount(_expectedImportTax1)}
+                    new List<FakeTax>{GetImportTaxWithAmount(_expectedImportTax1)}
 
                 ),
                 new FakeReceiptRow(rowWithBasicTax1,
-                    new List<Tax>{GetBasicTaxWithAmount(_expectedBasicTax1)}
+                    new List<FakeTax>{GetBasicTaxWithAmount(_expectedBasicTax1)}
 
                 ),
                 new FakeReceiptRow(rowWithImportBasicTax2,
-                    new List<Tax>{GetBasicTaxWithAmount(_expectedBasicTax2), GetImportTaxWithAmount(_expectedImportTax2)}
+                    new List<FakeTax>{GetBasicTaxWithAmount(_expectedBasicTax2), GetImportTaxWithAmount(_expectedImportTax2)}
 
                 ),
                 new FakeReceiptRow(rowWithImportTax2,
-                    new List<Tax>{GetImportTaxWithAmount(_expectedImportTax2)}
+                    new List<FakeTax>{GetImportTaxWithAmount(_expectedImportTax2)}
 
                 ),
                 new FakeReceiptRow(rowWithBasicTax2,
-                    new List<Tax>{GetBasicTaxWithAmount(_expectedBasicTax2)}
+                    new List<FakeTax>{GetBasicTaxWithAmount(_expectedBasicTax2)}
 
                 ),
                 new FakeReceiptRow(rowWithNoTax1),
@@ -167,8 +167,16 @@ Sales Taxes: 7.90
 Total: 98.38";
         }
         
-        private static Tax GetImportTaxWithAmount(double amount) => new Tax(ImportTaxLabel, amount);
-        private static Tax GetBasicTaxWithAmount(double amount) => new Tax(BasicTaxLabel, amount);
+        private static FakeTax GetImportTaxWithAmount(double amount) => new FakeTax
+        {
+            Label = ImportTaxLabel,
+            Amount = amount
+        };
+        private static FakeTax GetBasicTaxWithAmount(double amount) => new FakeTax
+        {
+            Label = BasicTaxLabel,
+            Amount = amount
+        };
     }
 
     

@@ -48,7 +48,7 @@ namespace SalesTaxesCalculation.UnitTests
             await _sut.ProcessPurchases();
             
             _receiptNotifier.Verify(i => i.Notify(It.Is<ReceiptContainer>(p => p.Equals(sampleReceipts))), Times.Once);
-            _purchaseRepositoryMock.Verify(i => i.Restore(It.IsAny<PurchaseContainer>()), Times.Never);
+            //_purchaseRepositoryMock.Verify(i => i.Restore(It.IsAny<PurchaseContainer>()), Times.Never);
         }
 
         [Fact]
@@ -61,7 +61,7 @@ namespace SalesTaxesCalculation.UnitTests
 
             _taxesCalculatorMock.Verify(i => i.Compute(It.IsAny<Purchase>()), Times.Never);
             _receiptNotifier.Verify(i => i.Notify(It.IsAny<ReceiptContainer>()), Times.Never);
-            _purchaseRepositoryMock.Verify(i => i.Restore(It.IsAny<PurchaseContainer>()), Times.Never);
+            //_purchaseRepositoryMock.Verify(i => i.Restore(It.IsAny<PurchaseContainer>()), Times.Never);
         }
 
         [Fact]
@@ -76,7 +76,7 @@ namespace SalesTaxesCalculation.UnitTests
             _logHandler.Verify(i => i.LogError(expectedErrMessage), Times.Once);
             _taxesCalculatorMock.Verify(i => i.Compute(It.IsAny<Purchase>()), Times.Never);
             _receiptNotifier.Verify(i => i.Notify(It.IsAny<ReceiptContainer>()), Times.Never);
-            _purchaseRepositoryMock.Verify(i => i.Restore(It.IsAny<PurchaseContainer>()), Times.Never);
+            //_purchaseRepositoryMock.Verify(i => i.Restore(It.IsAny<PurchaseContainer>()), Times.Never);
         }
 
         [Fact]
@@ -96,7 +96,7 @@ namespace SalesTaxesCalculation.UnitTests
             _logHandler.Verify(i => i.LogError(expectedErrMsg), Times.Once);
             _taxesCalculatorMock.Verify(i => i.Compute(It.IsAny<Purchase>()), Times.Never);
             _receiptNotifier.Verify(i => i.Notify(It.IsAny<ReceiptContainer>()), Times.Never);
-            _purchaseRepositoryMock.Verify(i => i.Restore(It.Is<PurchaseContainer>(p => p.Equals(samplePurchases))), Times.Once);
+            //_purchaseRepositoryMock.Verify(i => i.Restore(It.Is<PurchaseContainer>(p => p.Equals(samplePurchases))), Times.Once);
         }
 
         [Fact]
@@ -115,7 +115,7 @@ namespace SalesTaxesCalculation.UnitTests
             Assert.ThrowsAsync<Exception>(async () => await _sut.ProcessPurchases());
 
             _logHandler.Verify(i => i.LogError(expectedErrMsg), Times.Once);
-            _purchaseRepositoryMock.Verify(i => i.Restore(It.Is<PurchaseContainer>(p => p.Equals(samplePurchases))), Times.Once);
+            //_purchaseRepositoryMock.Verify(i => i.Restore(It.Is<PurchaseContainer>(p => p.Equals(samplePurchases))), Times.Once);
         }
 
         public PurchaseContainer GetPurchaseContainer()
