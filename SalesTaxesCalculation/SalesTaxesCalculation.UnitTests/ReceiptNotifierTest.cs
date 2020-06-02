@@ -26,7 +26,7 @@ namespace SalesTaxesCalculation.UnitTests
             var receipts = DataGenerator.GetReceipts();
             await _sut.Notify(new ReceiptContainer(receipts));
 
-            var expectedLogMessage = DataGenerator.GetMessage();
+            var expectedLogMessage = DataGenerator.GetMessage().Trim();
             _logHandlerMock.Verify(i => i.LogInfo(expectedLogMessage), Times.Once);
         }
     }

@@ -126,45 +126,43 @@ namespace SalesTaxesCalculation.UnitTests
 
         public static string GetMessage()
         {
-            return @"INPUT:
+            return @"INPUT
 
 Input 1:
-2 book at 12.49
-1 music CD at 14.99
-1 chocolate bar at 0.85
+3 imported i1 at 9,99
+5 imported i2 at 9,99
+33 i3 at 9,99
 
 Input 2:
-1 imported box of chocolates at 10.00
-1 imported bottle of perfume at 47.50
+1 imported i5 at 8,96
+22 imported i6 at 8,96
+1 i7 at 8,96
 
 Input 3:
-1 imported bottle of perfume at 27.99
-1 bottle of perfume at 18.99
-1 packet of headache pills at 9.75
-3 box of imported chocolates at 11.25
+7 i4 at 9,99
+2 i8 at 8,96
 
 OUTPUT
 
 Output 1:
-2 book: 24.98
-1 music CD: 16.49
-1 chocolate bar: 0.85
-Sales Taxes: 1.50
-Total: 42.32
+3 imported i1: 40,47
+5 imported i2: 57,45
+33 i3: 395,67
+Sales Taxes: 84,00
+Total: 493,59
 
 Output 2:
-1 imported box of chocolates: 10.50
-1 imported bottle of perfume: 54.65
-Sales Taxes: 7.65
-Total: 65.15
+1 imported i5: 12,11
+22 imported i6: 226,82
+1 i7: 10,76
+Sales Taxes: 34,65
+Total: 249,69
 
 Output 3:
-1 imported bottle of perfume: 32.19
-1 bottle of perfume: 20.89
-1 packet of headache pills: 9.75
-3 imported box of chocolates: 35.55
-Sales Taxes: 7.90
-Total: 98.38";
+7 i4: 69,93
+2 i8: 17,92
+Sales Taxes: 0,00
+Total: 87,85";
         }
         
         private static FakeTax GetImportTaxWithAmount(double amount) => new FakeTax

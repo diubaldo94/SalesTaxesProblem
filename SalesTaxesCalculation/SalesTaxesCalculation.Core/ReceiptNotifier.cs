@@ -35,7 +35,7 @@ namespace SalesTaxesCalculation.UnitTests
                     stringBuilder.Append($"{row.PurchaseInfo.Quantity} ");
                     if (row.PurchaseInfo.Imported)
                         stringBuilder.Append($"imported ");
-                    stringBuilder.Append($"{row.PurchaseInfo.Item.Name} at {row.PurchaseInfo.Item.PriceBeforeTaxes}");
+                    stringBuilder.Append($"{row.PurchaseInfo.Item.Name} at {string.Format("{0:0.00}", row.PurchaseInfo.Item.PriceBeforeTaxes)}");
                     stringBuilder.AppendLine();
                 }
                 stringBuilder.AppendLine();
@@ -50,13 +50,14 @@ namespace SalesTaxesCalculation.UnitTests
                     stringBuilder.Append($"{row.PurchaseInfo.Quantity} ");
                     if (row.PurchaseInfo.Imported)
                         stringBuilder.Append($"imported ");
-                    stringBuilder.Append($"{row.PurchaseInfo.Item.Name}: {row.TotalAmount()}");
+                    stringBuilder.Append($"{row.PurchaseInfo.Item.Name}: {string.Format("{0:0.00}", row.TotalAmount())}");
                     stringBuilder.AppendLine();
                 }
-                stringBuilder.AppendLine($"Sales Taxes: {receipts.List[i].TaxesAmount()}");
-                stringBuilder.AppendLine($"Total: {receipts.List[i].TotalAmount()}");
+                stringBuilder.AppendLine($"Sales Taxes: {string.Format("{0:0.00}", receipts.List[i].TaxesAmount())}");
+                stringBuilder.AppendLine($"Total: {string.Format("{0:0.00}", receipts.List[i].TotalAmount())}");
+                stringBuilder.AppendLine();
             }
-            return stringBuilder.ToString();
+            return stringBuilder.ToString().Trim();
         }
     }
 }
