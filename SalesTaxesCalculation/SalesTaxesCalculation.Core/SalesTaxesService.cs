@@ -27,11 +27,17 @@ namespace SalesTaxesCalculation.Core
         {
             try
             {
+                _logHandler.LogInfo("Looking for purchases...");
                 var purchases = await _repo.GetData();
 
-                //todo to thron or not?
                 if (!purchases.List.Any())
-                    return;// throw new Exception("No rows on the purchase file");
+                {
+                    _logHandler.LogInfo("No purchases found!");
+                    return;
+                }
+                else
+                    _logHandler.LogInfo("Purchases found!");
+
 
                 var generatedReceipts = new List<IReceipt>();
                 foreach(var purchase in purchases.List)
