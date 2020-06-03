@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SalesTaxesCalculation.Application.Exception
+namespace SalesTaxesCalculation.Application
 {
     public class MapperException : Exception
     {
