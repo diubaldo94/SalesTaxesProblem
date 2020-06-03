@@ -17,20 +17,10 @@ namespace SalesTaxesCalculation.UnitTests
 
         public SalesTaxesServiceTest()
         {
-            //only one file at a time, the oldest on the folder, put on error folder if unprocessable, 
-            //put on history folder on process ending
-
             _purchaseRepositoryMock = new Mock<IRepository<PurchaseContainer>>();
-            //IEnumerable<Purchase>
-
             _taxesCalculatorMock = new Mock<ICalculator<Purchase, IReceipt>>();
             _receiptNotifier = new Mock<INotifier<ReceiptContainer>>();
-            //IEnumerable<Receipt>
-
             _logHandler = new Mock<ILogHandler>();
-
-            //todo make an uow inside to process file batch in transaction
-            //todo how to handle file management and transaction?
             _sut = new SalesTaxesService(_purchaseRepositoryMock.Object, _taxesCalculatorMock.Object, _receiptNotifier.Object, _logHandler.Object);
         }
 
@@ -47,7 +37,6 @@ namespace SalesTaxesCalculation.UnitTests
 
             await _sut.ProcessPurchases();
             
-            //todo to work on param comparison (with it.is any it works, not with it:is)
             _receiptNotifier.Verify(i => i.Notify(It.Is<ReceiptContainer>(
                 p => p.Equals(sampleReceipts)            
             )), Times.Once);
@@ -63,7 +52,6 @@ namespace SalesTaxesCalculation.UnitTests
 
             _taxesCalculatorMock.Verify(i => i.Compute(It.IsAny<Purchase>()), Times.Never);
             _receiptNotifier.Verify(i => i.Notify(It.IsAny<ReceiptContainer>()), Times.Never);
-            //_purchaseRepositoryMock.Verify(i => i.Restore(It.IsAny<PurchaseContainer>()), Times.Never);
         }
 
         [Fact]
@@ -78,7 +66,6 @@ namespace SalesTaxesCalculation.UnitTests
             _logHandler.Verify(i => i.LogError(It.IsAny<string>()), Times.Once);
             _taxesCalculatorMock.Verify(i => i.Compute(It.IsAny<Purchase>()), Times.Never);
             _receiptNotifier.Verify(i => i.Notify(It.IsAny<ReceiptContainer>()), Times.Never);
-            //_purchaseRepositoryMock.Verify(i => i.Restore(It.IsAny<PurchaseContainer>()), Times.Never);
         }
 
         [Fact]

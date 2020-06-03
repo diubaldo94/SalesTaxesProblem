@@ -11,57 +11,15 @@ namespace SalesTaxesCalculation.UnitTests
 {
     public partial class SalesTaxesCalculatorTest
     {
-        //private readonly double _importTaxPercentage = 0.15;
-        //private readonly double _basicTaxPercentage = 0.2;
-        //private readonly string _basicTaxLabel = "BASIC";
-        //private readonly string _importTaxLabel = "IMPORT";
-
-        //private readonly double _price1 = 9.99;
-        //private readonly double _expectedBasicTax1 = 2.00;
-        //private readonly double _expectedImportTax1 = 1.50;
-
-        //private readonly double _price2 = 8.96;
-        //private readonly double _expectedBasicTax2 = 1.79;
-        //private readonly double _expectedImportTax2 = 1.35;
-
-        //private readonly string _exemptType = "book";
-        //private readonly string _notExemptType = "tv";
-
         private readonly Mock<ITaxesProvider> _taxesProvider;
         private readonly SalesTaxesCalculator _sut;
 
         public SalesTaxesCalculatorTest()
         {
             _taxesProvider = new Mock<ITaxesProvider>();
-            //todo use chain of factory for that
-            //or we can simply associate a taxconfig to each purchase row based on some condition
-            _sut = new SalesTaxesCalculator(_taxesProvider.Object);            
-            //    //new TaxesConfiguration(
-            //    //    DataGenerator.BasicTaxPercentage,
-            //    //    DataGenerator.BasicTaxLabel,
-            //    //    DataGenerator.ImportTaxPercentage,
-            //    //    DataGenerator.ImportTaxLabel, 
-            //    //    new BasicTaxExemptTypes(new List<string> { DataGenerator.ExemptType }))
-            //      );        
-
-            /*
-             * 
-             * 
-             * 
-            something like
-
-            new List<TaxRule>{
-                new TaxRule(p => !ExemptItemTypes.Contains(p.Type), p => p.BasicTax, 0.1),
-                new TaxRule(p => p.Imported, p => ImportTax, 0.05)      //percentages injected
-
-            something to make virtual calculation without rounding off and concrete calculation (sum of taxes) with roudnign off
-
-
-            */
-
+            _sut = new SalesTaxesCalculator(_taxesProvider.Object);       
         }
 
-        //todo make all trial with data provided by datagenerator
         [Fact]
         public async Task Should_AssociateCorrectTaxes_ForEachPurchaseRow()
         {
@@ -72,14 +30,6 @@ namespace SalesTaxesCalculation.UnitTests
                         new BasicTaxExemptTypes(new List<string> { DataGenerator.ExemptType })),
                     new ImportTaxRule(DataGenerator.ImportTaxPercentage, DataGenerator.ImportTaxLabel)
                 });
-            //new TaxesConfiguration()
-            //{
-            //    BasicTaxExemptTypes = new BasicTaxExemptTypes(new List<string> { DataGenerator.ExemptType }),
-            //    BasicTaxLabel = DataGenerator.BasicTaxLabel,
-            //    BasicTaxPercentage = DataGenerator.BasicTaxPercentage,
-            //    ImportTaxLabel = DataGenerator.ImportTaxLabel,
-            //    ImportTaxPercentage = DataGenerator.ImportTaxPercentage
-            //}
             var rows = DataGenerator.SamplePurchasesRows();
             var purchase = new Purchase(rows);
 
