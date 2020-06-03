@@ -1,9 +1,10 @@
 ﻿using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace SalesTaxesCalculation.Core
 {
     public interface ITaxesProvider
     {
-        Task<TaxesConfiguration> GetTaxes();
+        Task<IList<BaseTaxRule<PurchaseRow>>> GetTaxes();
     }
 }
