@@ -1,4 +1,5 @@
-﻿using SalesTaxesCalculation.Core;
+﻿using Moq;
+using SalesTaxesCalculation.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,20 +26,22 @@ namespace SalesTaxesCalculation.UnitTests
         //private readonly string _exemptType = "book";
         //private readonly string _notExemptType = "tv";
 
-
+        private readonly Mock<ITaxesProvider> _taxesProvider;
         private readonly SalesTaxesCalculator _sut;
 
         public SalesTaxesCalculatorTest()
         {
+            _taxesProvider = new Mock<ITaxesProvider>();
             //todo use chain of factory for that
             //or we can simply associate a taxconfig to each purchase row based on some condition
-            _sut = new SalesTaxesCalculator(
-                new TaxesConfiguration(
-                    DataGenerator.BasicTaxPercentage,
-                    DataGenerator.BasicTaxLabel,
-                    DataGenerator.ImportTaxPercentage,
-                    DataGenerator.ImportTaxLabel), 
-                new BasicTaxExemptTypes(new List<string> { DataGenerator.ExemptType }));        
+            _sut = new SalesTaxesCalculator(_taxesProvider.Object);            
+            //    //new TaxesConfiguration(
+            //    //    DataGenerator.BasicTaxPercentage,
+            //    //    DataGenerator.BasicTaxLabel,
+            //    //    DataGenerator.ImportTaxPercentage,
+            //    //    DataGenerator.ImportTaxLabel, 
+            //    //    new BasicTaxExemptTypes(new List<string> { DataGenerator.ExemptType }))
+            //      );        
 
             /*
              * 
@@ -61,6 +64,14 @@ namespace SalesTaxesCalculation.UnitTests
         [Fact]
         public void Should_AssociateCorrectTaxes_ForEachPurchaseRow()
         {
+            _taxesProvider.Setup(i => i.GetTaxes()).ReturnsAsync(new TaxesConfiguration()
+            {
+                BasicTaxExemptTypes = new BasicTaxExemptTypes(new List<string> { DataGenerator.ExemptType }),
+                BasicTaxLabel = DataGenerator.BasicTaxLabel,
+                BasicTaxPercentage = DataGenerator.BasicTaxPercentage,
+                ImportTaxLabel = DataGenerator.ImportTaxLabel,
+                ImportTaxPercentage = DataGenerator.ImportTaxPercentage
+            });
             var rows = DataGenerator.SamplePurchasesRows();
             var purchase = new Purchase(rows);
 

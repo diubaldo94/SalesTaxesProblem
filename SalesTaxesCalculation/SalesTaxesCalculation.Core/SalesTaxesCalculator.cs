@@ -7,16 +7,18 @@ namespace SalesTaxesCalculation.Core
     {
         private TaxesConfiguration _taxesConfiguration;
         private readonly IList<BaseTaxRule<PurchaseRow>> _taxRules;
+        private readonly ITaxesProvider _taxesProvider;
 
-        public SalesTaxesCalculator(TaxesConfiguration taxesConfiguration, BasicTaxExemptTypes exemptTypes)
+        public SalesTaxesCalculator(ITaxesProvider taxesProvider)
         {
-            _taxesConfiguration = taxesConfiguration;
-            //todo what about to make a factroy of rules?
-            _taxRules = new List<BaseTaxRule<PurchaseRow>>
-            {
-                new BasicTaxRule(taxesConfiguration.BasicTaxPercentage, taxesConfiguration.BasicTaxLabel, exemptTypes),
-                new ImportTaxRule(taxesConfiguration.ImportTaxPercentage, taxesConfiguration.ImportTaxLabel)
-            };
+            //_taxesConfiguration = taxesConfiguration;
+            ////todo what about to make a factroy of rules?
+            //_taxRules = new List<BaseTaxRule<PurchaseRow>>
+            //{
+            //    new BasicTaxRule(_taxesConfiguration.BasicTaxPercentage, _taxesConfiguration.BasicTaxLabel, _taxesConfiguration.BasicTaxExemptTypes),
+            //    new ImportTaxRule(_taxesConfiguration.ImportTaxPercentage, _taxesConfiguration.ImportTaxLabel)
+            //};
+            _taxesProvider = taxesProvider;
         }
 
         public IReceipt Compute(Purchase purchase)
