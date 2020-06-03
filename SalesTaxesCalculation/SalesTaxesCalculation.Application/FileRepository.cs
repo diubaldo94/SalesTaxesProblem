@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using SalesTaxesCalculation.Application.Exception;
+using Microsoft.Extensions.Options;
 using SalesTaxesCalculation.Core;
 
 namespace SalesTaxesCalculation.Application
@@ -15,7 +15,7 @@ namespace SalesTaxesCalculation.Application
         private readonly string _errPath;
         private readonly string _backupPath;
 
-        public FileRepository(IMapper<T> serializer)//, RepositoryConfig config)
+        public FileRepository(IMapper<T> serializer, IOptions<FileSystemConfiguration> dataAccessConfiguration)//, RepositoryConfig config)
         {
             _serializer = serializer;
 
@@ -23,9 +23,9 @@ namespace SalesTaxesCalculation.Application
             //_inputPath = config.InputPath;
             //_backupPath = config.BackupPath;
             //_errPath = config.ErrPath;
-            _inputPath = "C:\\SalesTaxes\\Purchases\\";
-            _backupPath = "C:\\SalesTaxes\\Backup\\";
-            _errPath = "C:\\SalesTaxes\\Error\\";
+            _inputPath = dataAccessConfiguration.Value.InputPath; // "C:\\SalesTaxes\\Purchases\\";
+            _backupPath = dataAccessConfiguration.Value.BackupPath; //"C:\\SalesTaxes\\Backup\\";
+            _errPath = dataAccessConfiguration.Value.ErrPath; //"C:\\SalesTaxes\\Error\\";
         }
 
         public async Task<T> GetData()
@@ -92,21 +92,6 @@ namespace SalesTaxesCalculation.Application
         //    throw new System.NotImplementedException();
         //}
 
-    }
-
-
-    public class RepositoryConfig
-    {
-        public RepositoryConfig(string inputPath, string backupPath, string errPath)
-        {
-            InputPath = inputPath;
-            BackupPath = backupPath;
-            ErrPath = errPath;
-        }
-
-        public string InputPath { get; }
-        public string BackupPath { get; }
-        public string ErrPath { get; }
     }
 
 

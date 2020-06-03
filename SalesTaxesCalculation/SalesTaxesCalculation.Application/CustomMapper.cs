@@ -3,7 +3,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using Newtonsoft.Json;
 using SalesTaxesCalculation.Application.Dto;
-using SalesTaxesCalculation.Application.Exception;
 using SalesTaxesCalculation.Core;
 
 namespace SalesTaxesCalculation.Application
