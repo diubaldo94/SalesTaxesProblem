@@ -8,8 +8,7 @@ namespace SalesTaxesCalculation.Application
     {
         public async Task<IList<BaseTaxRule<PurchaseRow>>> GetTaxes()
         {
-            //_taxesConfiguration = taxesConfiguration;
-            ////todo what about to make a factroy of rules?
+            //simple repo, info could be injected or polled by db or file o other
             return new List<BaseTaxRule<PurchaseRow>>
             {
                 new BasicTaxRule(0.1, "BASIC", new BasicTaxExemptTypes(new List<string>{ "books","food","medical products"})),

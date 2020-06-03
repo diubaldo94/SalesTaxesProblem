@@ -15,17 +15,12 @@ namespace SalesTaxesCalculation.Application
         private readonly string _errPath;
         private readonly string _backupPath;
 
-        public FileRepository(IMapper<T> serializer, IOptions<FileSystemConfiguration> dataAccessConfiguration)//, RepositoryConfig config)
+        public FileRepository(IMapper<T> serializer, IOptions<FileSystemConfiguration> dataAccessConfiguration)
         {
             _serializer = serializer;
-
-            //todo to inject
-            //_inputPath = config.InputPath;
-            //_backupPath = config.BackupPath;
-            //_errPath = config.ErrPath;
-            _inputPath = dataAccessConfiguration.Value.InputPath; // "C:\\SalesTaxes\\Purchases\\";
-            _backupPath = dataAccessConfiguration.Value.BackupPath; //"C:\\SalesTaxes\\Backup\\";
-            _errPath = dataAccessConfiguration.Value.ErrPath; //"C:\\SalesTaxes\\Error\\";
+            _inputPath = dataAccessConfiguration.Value.InputPath; 
+            _backupPath = dataAccessConfiguration.Value.BackupPath; 
+            _errPath = dataAccessConfiguration.Value.ErrPath; 
         }
 
         public async Task<T> GetData()
@@ -38,7 +33,7 @@ namespace SalesTaxesCalculation.Application
                     throw new Exception($"No files on folder {_inputPath}");
                 var myFile = files.OrderBy(f => f.LastWriteTime).First();
                 var content = GetObjectFromFile(myFile);
-                string destFileName = $"{_backupPath}{DateTime.Now:yyyyMMddHHmmss}_Purchase.json";
+                string destFileName = Path.Combine(_backupPath, GetFilenameToApply());
                 myFile.MoveTo(destFileName);
                 return content;
             }
@@ -56,7 +51,7 @@ namespace SalesTaxesCalculation.Application
             }
             catch (Exception e)
             {
-                throw new Exception($"Directory not found {_inputPath}", e);
+                throw new Exception($"Input directory not found {_inputPath} : {e.Message}", e);
             }
         }
 
@@ -73,26 +68,14 @@ namespace SalesTaxesCalculation.Application
             }
             catch (MapperException)
             {
-                file.MoveTo($"{_errPath}{DateTime.Now:yyyyMMddHHmmss}_ErrorPurchase.json");
+                file.MoveTo(Path.Combine(_errPath, GetFilenameToApply()));
                 throw;
             }
-            //catch (Exception e)
-            //{
-
-            //}
         }
 
-        //private Task MoveToError(T data)
-        //{
-        //    throw new System.NotImplementedException();
-        //}
-
-        //private Task Backup(T data)
-        //{
-        //    throw new System.NotImplementedException();
-        //}
-
+        private static string GetFilenameToApply()
+        {
+            return $"{DateTime.Now:yyyyMMddHHmmss}_Purchase.json";
+        }
     }
-
-
 }
