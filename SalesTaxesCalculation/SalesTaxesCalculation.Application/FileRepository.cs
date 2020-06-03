@@ -31,7 +31,7 @@ namespace SalesTaxesCalculation.Application
                 var files = directoryInfo.GetFiles();
                 if (!files.Any())
                     throw new Exception($"No files on folder {_inputPath}");
-                var myFile = files.OrderBy(f => f.LastWriteTime).First();
+                var myFile = files.OrderBy(f => f.CreationTime).First();
                 var content = GetObjectFromFile(myFile);
                 string destFileName = Path.Combine(_backupPath, GetFilenameToApply());
                 myFile.MoveTo(destFileName);
