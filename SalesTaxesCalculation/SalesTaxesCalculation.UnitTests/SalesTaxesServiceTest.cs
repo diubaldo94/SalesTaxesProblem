@@ -41,9 +41,9 @@ namespace SalesTaxesCalculation.UnitTests
             var sampleReceipts = GetReceiptContainer();
             _purchaseRepositoryMock.Setup(i => i.GetData()).ReturnsAsync(samplePurchases).Verifiable();
             _taxesCalculatorMock.Setup(i => i.Compute(It.Is<Purchase>(p => p.Equals(samplePurchases.List[0]))))
-                .Returns(sampleReceipts.List[0]).Verifiable();
+                .ReturnsAsync(sampleReceipts.List[0]).Verifiable();
             _taxesCalculatorMock.Setup(i => i.Compute(It.Is<Purchase>(p => p.Equals(samplePurchases.List[1]))))
-                .Returns(sampleReceipts.List[1]).Verifiable();
+                .ReturnsAsync(sampleReceipts.List[1]).Verifiable();
 
             await _sut.ProcessPurchases();
             
@@ -89,9 +89,9 @@ namespace SalesTaxesCalculation.UnitTests
             var sampleReceipts = GetReceiptContainer();
             _purchaseRepositoryMock.Setup(i => i.GetData()).ReturnsAsync(samplePurchases).Verifiable();
             _taxesCalculatorMock.Setup(i => i.Compute(It.Is<Purchase>(p => p.Equals(samplePurchases.List[0]))))
-                .Returns(sampleReceipts.List[0]).Verifiable();
+                .ReturnsAsync(sampleReceipts.List[0]).Verifiable();
             _taxesCalculatorMock.Setup(i => i.Compute(It.Is<Purchase>(p => p.Equals(samplePurchases.List[1]))))
-                .Throws(new Exception(expectedErrMsg)).Verifiable();
+                .ThrowsAsync(new Exception(expectedErrMsg)).Verifiable();
 
             Assert.ThrowsAsync<Exception>(async () => await _sut.ProcessPurchases());
 
@@ -107,9 +107,9 @@ namespace SalesTaxesCalculation.UnitTests
             var sampleReceipts = GetReceiptContainer();
             _purchaseRepositoryMock.Setup(i => i.GetData()).ReturnsAsync(samplePurchases).Verifiable();
             _taxesCalculatorMock.Setup(i => i.Compute(It.Is<Purchase>(p => p.Equals(samplePurchases.List[0]))))
-                .Returns(sampleReceipts.List[0]).Verifiable();
+                .ReturnsAsync(sampleReceipts.List[0]).Verifiable();
             _taxesCalculatorMock.Setup(i => i.Compute(It.Is<Purchase>(p => p.Equals(samplePurchases.List[1]))))
-                .Returns(sampleReceipts.List[1]).Verifiable();
+                .ReturnsAsync(sampleReceipts.List[1]).Verifiable();
             _receiptNotifier.Setup(i => i.Notify(It.IsAny<ReceiptContainer>())).ThrowsAsync(new Exception(expectedErrMsg)).Verifiable();
 
             Assert.ThrowsAsync<Exception>(async () => await _sut.ProcessPurchases());

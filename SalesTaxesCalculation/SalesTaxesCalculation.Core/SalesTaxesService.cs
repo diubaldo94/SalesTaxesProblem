@@ -42,7 +42,7 @@ namespace SalesTaxesCalculation.Core
                 var generatedReceipts = new List<IReceipt>();
                 foreach(var purchase in purchases.List)
                 {
-                    var receipt = _calculator.Compute(purchase);
+                    var receipt = await _calculator.Compute(purchase);
                     generatedReceipts.Add(receipt);
                 }
                 await _notifier.Notify(new ReceiptContainer(generatedReceipts));

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Xunit;
+using System.Threading.Tasks;
 
 namespace SalesTaxesCalculation.UnitTests
 {
@@ -62,22 +63,29 @@ namespace SalesTaxesCalculation.UnitTests
 
         //todo make all trial with data provided by datagenerator
         [Fact]
-        public void Should_AssociateCorrectTaxes_ForEachPurchaseRow()
+        public async Task Should_AssociateCorrectTaxes_ForEachPurchaseRow()
         {
-            _taxesProvider.Setup(i => i.GetTaxes()).ReturnsAsync(new TaxesConfiguration()
-            {
-                BasicTaxExemptTypes = new BasicTaxExemptTypes(new List<string> { DataGenerator.ExemptType }),
-                BasicTaxLabel = DataGenerator.BasicTaxLabel,
-                BasicTaxPercentage = DataGenerator.BasicTaxPercentage,
-                ImportTaxLabel = DataGenerator.ImportTaxLabel,
-                ImportTaxPercentage = DataGenerator.ImportTaxPercentage
-            });
+            _taxesProvider.Setup(i => i.GetTaxes()).ReturnsAsync(
+                new List<BaseTaxRule<PurchaseRow>>
+                {
+                    new BasicTaxRule(DataGenerator.BasicTaxPercentage, DataGenerator.BasicTaxLabel, 
+                        new BasicTaxExemptTypes(new List<string> { DataGenerator.ExemptType })),
+                    new ImportTaxRule(DataGenerator.ImportTaxPercentage, DataGenerator.ImportTaxLabel)
+                });
+            //new TaxesConfiguration()
+            //{
+            //    BasicTaxExemptTypes = new BasicTaxExemptTypes(new List<string> { DataGenerator.ExemptType }),
+            //    BasicTaxLabel = DataGenerator.BasicTaxLabel,
+            //    BasicTaxPercentage = DataGenerator.BasicTaxPercentage,
+            //    ImportTaxLabel = DataGenerator.ImportTaxLabel,
+            //    ImportTaxPercentage = DataGenerator.ImportTaxPercentage
+            //}
             var rows = DataGenerator.SamplePurchasesRows();
             var purchase = new Purchase(rows);
 
             var expectedReceiptRows = DataGenerator.SampleReceiptRows();
             IReceipt expected = new FakeReceipt(expectedReceiptRows);
-            var actual = _sut.Compute(purchase);
+            var actual = await _sut.Compute(purchase);
 
             double expectedTaxes = expected.TaxesAmount();
             double actualTaxes = actual.TaxesAmount();
