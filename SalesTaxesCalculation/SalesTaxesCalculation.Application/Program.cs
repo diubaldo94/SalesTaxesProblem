@@ -23,10 +23,14 @@ namespace SalesTaxesCalculation.Application
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((ctx, services) =>
                 {
-                    services.Configure<FileSystemConfiguration>(ctx.Configuration.GetSection("FileSystemConfiguration"));
-                    //services.Configure<TaxesConfiguration>(ctx.Configuration.GetSection("TaxesConfiguration"));
+                    services.Configure<FileSystemConfiguration>(ctx.Configuration.GetSection("RepositoryConfiguration"));
+                    services.Configure<OutputConfiguration>(ctx.Configuration.GetSection("OutputConfiguration"));
+
+                    services.AddTransient<ICommand, OutputFileCommand>();
 
                     services.AddSingleton(typeof(IRepository<>), typeof(FileRepository<>));
+                    services.AddSingleton<IMapper<PurchaseContainer>, CustomMapper>();
+                    services.AddSingleton<IMessageGenerator<ReceiptContainer>, ReceiptMessageGenerator>();
                     services.AddSingleton<IMapper<PurchaseContainer>, CustomMapper>();
                     services.AddSingleton<ILogHandler, LogHandler>();
                     services.AddSingleton<INotifier<ReceiptContainer>, ReceiptNotifier>();

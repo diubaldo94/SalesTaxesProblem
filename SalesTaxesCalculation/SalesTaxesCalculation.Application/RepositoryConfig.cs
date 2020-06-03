@@ -1,23 +1,8 @@
 ﻿namespace SalesTaxesCalculation.Application
 {
-    public interface IDataAccessConfiguration
+    public class OutputConfiguration
     {
-        string InputPath { get; }
-        string BackupPath { get; }
-        string ErrPath { get; }
-    }
-    public class RepositoryConfig : IDataAccessConfiguration
-    {
-        public RepositoryConfig(string inputPath, string backupPath, string errPath)
-        {
-            InputPath = inputPath;
-            BackupPath = backupPath;
-            ErrPath = errPath;
-        }
-
-        public string InputPath { get; }
-        public string BackupPath { get; }
-        public string ErrPath { get; }
+        public string Path { get; set; }
     }
 
     public class FileSystemConfiguration
