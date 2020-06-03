@@ -39,7 +39,7 @@ namespace SalesTaxesCalculation.Application
             }
             catch (Exception e)
             {
-                throw e;
+                throw new Exception($"Failed on getting data: {e.Message}", e);
             }
         }
 
